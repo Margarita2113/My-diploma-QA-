@@ -1,25 +1,23 @@
 version: '3.7'
 services:
   mysql:
-    image: mysql:8.0.19
+    image: mysql
     restart: always
     ports:
-      - '3308:3308'
+      - '3306:3306'
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
-      - MYSQL_DATABASE=app-db
-      - MYSQL_USER=user
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
 
   postgres:
-    image: postgres:12.0-alpine
-    restart: always
+    image: postgres:14.0-alpine
     ports:
-      - '5032:5032'
+      - '5432:5432'
     environment:
-      - POSTGRES_RANDOM_ROOT_PASSWORD=yes
-      - POSTGRES_DB=app-db
-      - POSTGRES_USER=user
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
       - POSTGRES_PASSWORD=pass
 
   nodejs:
