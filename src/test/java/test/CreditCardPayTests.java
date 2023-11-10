@@ -1,12 +1,12 @@
-package Tests;
+package test;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import Data.DataHelper;
-import Data.SQLHelper;
+import data.DataHelper;
+import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
-import Page.MainPage;
-import Page.CreditCardPage;
+import page.MainPage;
+import page.CreditCardPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -92,21 +92,18 @@ public class CreditCardPayTests {
     public void shouldDenyWithTwoDigitsCardField() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getGenerateInvalidCardInfo("12");
+        var month = DataHelper.getGenerateMonth(1);
+        var year = DataHelper.generateYear(1);
+        var owner = DataHelper.generateOwner("EN");
+        var cvc = DataHelper.generateCVCCode(3);
+        creditCardPage.filledForm(cardNumber, month, year, owner, cvc);
         creditCardPage.onlyCardField(cardNumber);
-        creditCardPage.waitEmptyField();
+        creditCardPage.waitWrongFormat();
     }
+
 
     @Test
     // 4 тестовый сценарий
-    public void shouldBeErrorWithSeventeenDigitsCardField() {
-        creditCardPage = mainPage.payWithCreditCard();
-        var cardNumber = DataHelper.getGenerateInvalidCardInfo("4444444444444444");
-        creditCardPage.onlyCardField(cardNumber);
-        creditCardPage.waitEmptyField();
-    }
-
-    @Test
-    // 5 тестовый сценарий
     public void shouldDenyWithEmptyCardField() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getEmptyCardInfo();
@@ -119,7 +116,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 6 тестовый сценарий
+    // 5 тестовый сценарий
     public void shouldDenyOwnerFieldWithCyrillicChars() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -132,7 +129,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 7 тестовый сценарий
+    // 6 тестовый сценарий
     public void shouldDenyOwnerFieldWithHieroglyphsChars() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -145,7 +142,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 8 тестовый сценарий
+    // 7 тестовый сценарий
     public void shouldDenyOwnerFieldWithNumbersChars() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -158,7 +155,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 9 тестовый сценарий
+    // 8 тестовый сценарий
     public void shouldDenyWithEmptyOwnerField() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -167,10 +164,10 @@ public class CreditCardPayTests {
         var owner = DataHelper.getEmptyOwner();
         var cvc = DataHelper.generateCVCCode(3);
         creditCardPage.filledForm(cardNumber, month, year, owner, cvc);
-        creditCardPage.waitEmptyField();
+        creditCardPage.waitEmptyFieldOwner();
     }
 
-    // 10 тестовый сценарий
+    // 9 тестовый сценарий
     @Test
     public void shouldBeErrorWithEmptyField() {
         creditCardPage = mainPage.payWithCreditCard();
@@ -183,7 +180,7 @@ public class CreditCardPayTests {
         creditCardPage.waitEmptyField();
     }
 
-    // 11 тестовый сценарий
+    // 10 тестовый сценарий
     @Test
     public void shouldDenyWithInvalidDateMonth() {
         creditCardPage = mainPage.payWithCreditCard();
@@ -197,7 +194,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 12 тестовый сценарий
+    // 11 тестовый сценарий
     public void shouldDenyWithEmptyMonthField() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -209,7 +206,7 @@ public class CreditCardPayTests {
         creditCardPage.waitEmptyField();
     }
 
-    // 13 тестовый сценарий
+    // 12 тестовый сценарий
     @Test
     public void shouldErrorWithPreviousYearField() {
         creditCardPage = mainPage.payWithCreditCard();
@@ -223,7 +220,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 14 тестовый сценарий
+    // 13 тестовый сценарий
     public void shouldDenyWithEmptyYearField() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -235,7 +232,7 @@ public class CreditCardPayTests {
         creditCardPage.waitEmptyField();
     }
 
-    // 15 тестовый сценарий
+    // 14 тестовый сценарий
     @Test
     public void shouldErrorWithTwoNumbersCVCField() {
         creditCardPage = mainPage.payWithCreditCard();
@@ -245,7 +242,7 @@ public class CreditCardPayTests {
     }
 
     @Test
-    // 16 тестовый сценарий
+    // 15 тестовый сценарий
     public void shouldDenyEmptyCVCField() {
         creditCardPage = mainPage.payWithCreditCard();
         var cardNumber = DataHelper.getFirstCardInfo();

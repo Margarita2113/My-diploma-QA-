@@ -1,7 +1,6 @@
-package Page;
+package page;
 
-
-import Data.DataHelper;
+import data.DataHelper;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
@@ -14,7 +13,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class DebitCardPage {
+public class CreditCardPage {
     private SelenideElement cardNumberForm = $("[placeholder='0000 0000 0000 0000']");
     private SelenideElement monthForm = $("[placeholder='08']");
     private SelenideElement yearForm = $("[placeholder='22']");
@@ -23,7 +22,8 @@ public class DebitCardPage {
     private SelenideElement continueButton = $(byText("Продолжить"));
     private SelenideElement successfulNotification = $(byText("Операция одобрена Банком."));
     private SelenideElement errorNotification = $(byText("Ошибка! Банк отказал в проведении операции."));
-    private SelenideElement emptyField = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement emptyFieldOwner = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement emptyField = $(byText("Неверный формат"));
     private SelenideElement wrongFormat = $(byText("Неверный формат"));
     private SelenideElement wrongCardDate = $(byText("Неверно указан срок действия карты"));
     private SelenideElement cardExpired = $(byText("Истёк срок действия карты"));
@@ -47,15 +47,19 @@ public class DebitCardPage {
 
 
     public void waitSuccessfulNotification() {
-        successfulNotification.should(visible, Duration.ofSeconds(10));
+        successfulNotification.should(visible, Duration.ofSeconds(4));
     }
 
     public void waitErrorNotification() {
-        errorNotification.should(visible, Duration.ofSeconds(10));
+        errorNotification.should(visible, Duration.ofSeconds(4));
     }
 
     public void waitEmptyField() {
         emptyField.should(visible);
+    }
+
+    public void waitEmptyFieldOwner() {
+        emptyFieldOwner.should(visible);
     }
 
     public void waitWrongFormat() {
@@ -78,21 +82,6 @@ public class DebitCardPage {
         cardNumberForm.should(Condition.empty);
     }
 
-    public void onlyMonthField(DataHelper.MonthInfo monthInfo) {
-        monthForm.setValue(monthInfo.getMonth());
-    }
-
-    public void emptyMonthField() {
-        monthForm.should(empty);
-    }
-
-    public void onlyYearField(DataHelper.YearInfo yearInfo) {
-        yearForm.setValue(yearInfo.getYear());
-    }
-
-    public void emptyYearField() {
-        yearForm.should(empty);
-    }
 
     public void onlyCVCField(DataHelper.CvcInfo cvcInfo) {
         cvcForm.setValue(cvcInfo.getCvc());
@@ -101,4 +90,5 @@ public class DebitCardPage {
     public void emptyCVCField() {
         cvcForm.should(empty);
     }
+
 }

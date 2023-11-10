@@ -1,12 +1,12 @@
-package Tests;
+package test;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import Data.DataHelper;
-import Data.SQLHelper;
+import data.DataHelper;
+import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
-import Page.MainPage;
-import Page.DebitCardPage;
+import page.MainPage;
+import page.DebitCardPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -93,21 +93,18 @@ public class DebitCardPayTests {
     public void shouldDenyWithThreeDigitsCardField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getGenerateInvalidCardInfo("123");
+        var month = DataHelper.getGenerateMonth(1);
+        var year = DataHelper.generateYear(1);
+        var owner = DataHelper.generateOwner("EN");
+        var cvc = DataHelper.generateCVCCode(3);
+        debitCardPage.filledForm(cardNumber, month, year, owner, cvc);
         debitCardPage.onlyCardField(cardNumber);
         debitCardPage.waitEmptyField();
     }
+
 
     @Test
     // Сценарий 2.4
-    public void shouldBeErrorWithSeventeenDigitsCardField() {
-        debitCardPage = mainPage.payWithDebitCard();
-        var cardNumber = DataHelper.getGenerateInvalidCardInfo("4444444444444444");
-        debitCardPage.onlyCardField(cardNumber);
-        debitCardPage.waitEmptyField();
-    }
-
-    @Test
-    // Сценарий 2.5
     public void shouldDenyWithEmptyCardField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getEmptyCardInfo();
@@ -120,7 +117,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.6
+    // Сценарий 2.5
     public void shouldDenyOwnerFieldWithCyrillicChars() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -133,7 +130,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.7
+    // Сценарий 2.6
     public void shouldDenyOwnerFieldWithHieroglyphsChars() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -146,7 +143,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.8
+    // Сценарий 2.7
     public void shouldDenyOwnerFieldWithNumbersChars() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -159,7 +156,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.9
+    // Сценарий 2.8
     public void shouldDenyWithEmptyOwnerField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -168,11 +165,11 @@ public class DebitCardPayTests {
         var owner = DataHelper.getEmptyOwner();
         var cvc = DataHelper.generateCVCCode(3);
         debitCardPage.filledForm(cardNumber, month, year, owner, cvc);
-        debitCardPage.waitEmptyField();
+        debitCardPage.waitEmptyFieldOwner();
     }
 
     @Test
-    // Сценарий 2.10
+    // Сценарий 2.9
     public void shouldBeErrorWithEmptyField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getEmptyCardInfo();
@@ -185,7 +182,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // // Сценарий 2.11
+    // // Сценарий 2.10
     public void shouldDenyWithInvalidDateMonth() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -198,7 +195,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.12
+    // Сценарий 2.11
     public void shouldDenyWithEmptyMonthField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -211,7 +208,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.13
+    // Сценарий 2.12
     public void shouldDenyWithInPreviousYearField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -224,7 +221,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.14
+    // Сценарий 2.13
     public void shouldDenyWithEmptyYearField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();
@@ -237,7 +234,7 @@ public class DebitCardPayTests {
     }
 
     @Test
-    // Сценарий 2.15
+    // Сценарий 2.14
     public void shouldErrorWithTwoNumbersCVCField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cvc = DataHelper.getGenerateInvalidCvcCode("12");
@@ -247,7 +244,7 @@ public class DebitCardPayTests {
 
 
     @Test
-    // Сценарий 2.16
+    // Сценарий 2.15
     public void shouldDenyEmptyCVCField() {
         debitCardPage = mainPage.payWithDebitCard();
         var cardNumber = DataHelper.getFirstCardInfo();

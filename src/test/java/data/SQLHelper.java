@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
@@ -6,7 +6,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.time.Duration;
 
 public class SQLHelper {
 
@@ -14,7 +13,7 @@ public class SQLHelper {
 
     }
 
-    private static final String DB_URL = System.getProperty("db.url");
+    private static final String DB_URL = System.getProperty("datasource");
 
     @SneakyThrows
     public static Connection getConnection() {

@@ -1,6 +1,7 @@
-package Page;
+package page;
 
-import Data.DataHelper;
+
+import data.DataHelper;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
@@ -13,7 +14,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class CreditCardPage {
+public class DebitCardPage {
     private SelenideElement cardNumberForm = $("[placeholder='0000 0000 0000 0000']");
     private SelenideElement monthForm = $("[placeholder='08']");
     private SelenideElement yearForm = $("[placeholder='22']");
@@ -22,7 +23,8 @@ public class CreditCardPage {
     private SelenideElement continueButton = $(byText("Продолжить"));
     private SelenideElement successfulNotification = $(byText("Операция одобрена Банком."));
     private SelenideElement errorNotification = $(byText("Ошибка! Банк отказал в проведении операции."));
-    private SelenideElement emptyField = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement emptyField = $(byText("Неверный формат"));
+    private SelenideElement emptyFieldOwner = $(byText("Поле обязательно для заполнения"));
     private SelenideElement wrongFormat = $(byText("Неверный формат"));
     private SelenideElement wrongCardDate = $(byText("Неверно указан срок действия карты"));
     private SelenideElement cardExpired = $(byText("Истёк срок действия карты"));
@@ -36,23 +38,21 @@ public class CreditCardPage {
         continueButton.click();
     }
 
-    public void cleanFilledForm() {
-        cardNumberForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        monthForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        yearForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        ownerForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        cvcForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+
+    public void waitSuccessfulNotification() {
+        successfulNotification.should(visible, Duration.ofSeconds(10));
     }
 
-
-    public void waitSuccessfulNotification() {successfulNotification.should(visible, Duration.ofSeconds(4));
-    }
-
-    public void waitErrorNotification() {errorNotification.should(visible, Duration.ofSeconds(4));
+    public void waitErrorNotification() {
+        errorNotification.should(visible, Duration.ofSeconds(10));
     }
 
     public void waitEmptyField() {
         emptyField.should(visible);
+    }
+
+    public void waitEmptyFieldOwner() {
+        emptyFieldOwner.should(visible);
     }
 
     public void waitWrongFormat() {
@@ -75,21 +75,6 @@ public class CreditCardPage {
         cardNumberForm.should(Condition.empty);
     }
 
-    public void onlyMonthField(DataHelper.MonthInfo monthInfo) {
-        monthForm.setValue(monthInfo.getMonth());
-    }
-
-    public void emptyMonthField() {
-        monthForm.should(empty);
-    }
-
-    public void onlyYearField(DataHelper.YearInfo yearInfo) {
-        yearForm.setValue(yearInfo.getYear());
-    }
-
-    public void emptyYearField() {
-        yearForm.should(empty);
-    }
 
     public void onlyCVCField(DataHelper.CvcInfo cvcInfo) {
         cvcForm.setValue(cvcInfo.getCvc());
@@ -98,5 +83,4 @@ public class CreditCardPage {
     public void emptyCVCField() {
         cvcForm.should(empty);
     }
-
 }

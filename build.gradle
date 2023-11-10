@@ -27,7 +27,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-    testImplementation 'com.codeborne:selenide:6.12.2'
+    testImplementation 'com.codeborne:selenide:6.19.0'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'org.slf4j:slf4j-simple:1.7.33'
     testImplementation 'mysql:mysql-connector-java:8.0.31'
@@ -48,7 +48,7 @@ test {
     systemProperty 'selenide.headless', System.getProperty('headless')
     //Выбирается одна из баз данных:
     //Для работы с базой данных mySQL (со строки ниже необходимо снять комментарий):
-    systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/base_mysql')
+    systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/app')
     //Для работы с базой данных postgreSQL (со строки ниже необходимо снять комментарий):
     //systemProperty 'datasource', System.getProperty('datasource', 'jdbc:postgresql://localhost:5432/base_postgresql')
 }
