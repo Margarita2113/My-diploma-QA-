@@ -18,25 +18,25 @@ Google Chrome
 * Запускаем контейнеры с помощью команды в терминале
 docker-compose up --build
 
-*Запускаем SUT.*
-**для MySQL:**
+## Запускаем SUT.
+### для MySQL:
 
 В консоле ввести команду: java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
-**для PostgreSQL:**
+### для PostgreSQL:
 
 В консоле ввести команду: java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
-*Запускаем авто-тесты*
-**для MySQL:**
+## Запускаем авто-тесты
+### для MySQL:
 В консоле ввести команду: ./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app
-**для PostgreSQL:**
+### для PostgreSQL:
 В консоле ввести команду: ./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"
-*Генерируем отчёт по итогам тестирования с помощью Allure командой:*
+## Генерируем отчёт по итогам тестирования с помощью Allure командой:
 
 ./gradlew allureServe
 
-Отчет автоматически откроется в браузере.
+- Отчет автоматически откроется в браузере.
 
-После работы с отчетом, останавливаем работу АllureServe в терминале при помощи сочетания клавиш Ctrl + C и подтверждаем в терминале клавишей Y
+- После работы с отчетом, останавливаем работу АllureServe в терминале при помощи сочетания клавиш Ctrl + C и подтверждаем в терминале клавишей Y
 
 ## Документация
 1. Plan.md
