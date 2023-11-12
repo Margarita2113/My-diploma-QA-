@@ -43,12 +43,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    //В тестах, при вызове `gradlew test -Dheadless=true`
-    //будет передаваться этот параметр в JVM (где его подтянет Selenide)
     systemProperty 'selenide.headless', System.getProperty('headless')
-    //Выбирается одна из баз данных:
-    //Для работы с базой данных mySQL (со строки ниже необходимо снять комментарий):
-    systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/app')
-    //Для работы с базой данных postgreSQL (со строки ниже необходимо снять комментарий):
-    //systemProperty 'datasource', System.getProperty('datasource', 'jdbc:postgresql://localhost:5432/base_postgresql')
+    //systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/app')
+    systemProperty 'db.url', System.getProperty('db.url')
 }

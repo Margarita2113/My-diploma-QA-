@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 
 public class SQLHelper {
 
-    private SQLHelper(){
+    private SQLHelper() {
 
     }
 

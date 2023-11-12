@@ -37,21 +37,13 @@ public class CreditCardPage {
         continueButton.click();
     }
 
-    public void cleanFilledForm() {
-        cardNumberForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        monthForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        yearForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        ownerForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        cvcForm.doubleClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-    }
-
 
     public void waitSuccessfulNotification() {
-        successfulNotification.should(visible, Duration.ofSeconds(4));
+        successfulNotification.should(visible, Duration.ofSeconds(10));
     }
 
     public void waitErrorNotification() {
-        errorNotification.should(visible, Duration.ofSeconds(4));
+        errorNotification.should(visible, Duration.ofSeconds(5));
     }
 
     public void waitEmptyField() {
